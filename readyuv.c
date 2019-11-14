@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
+#include "tiffio.h"
+#include"tiff.h"
+
+
 
 int main(int argc, char *argv[]){
   FILE *origin;
@@ -7,6 +12,8 @@ int main(int argc, char *argv[]){
   int height = 0;
   int read_size = 0;
   int nbframes = 0;
+  int size = 0;
+  int data = 0;
   unsigned char *filesize = NULL;
 
   width = atoi(argv[2]);
@@ -35,7 +42,7 @@ int main(int argc, char *argv[]){
       fread(filesize,1,read_size,origin);
       printf("%d\n",*filesize);
     }
-    filesize = filesize + width*height/2;
+    origin += width*height/2;
   }
   return 0;
 }
