@@ -7,7 +7,7 @@ int main(int argc, char *argv[]){
   int height = 0;
   int read_size = 0;
   int nbframes = 0;
-  unsigned int *filesize = NULL;
+  unsigned char *filesize = NULL;
 
   width = atoi(argv[2]);
   height = atoi(argv[3]);
@@ -19,14 +19,14 @@ int main(int argc, char *argv[]){
     exit(1);
   }
 
-  filesize = (unsigned int*)malloc((sizeof(unsigned int)*width*height*nbframes));
+  filesize = (unsigned char*)malloc((sizeof(unsigned char)*width*height*nbframes));
   if(filesize==NULL){
     printf("malloc error\n");
     free(filesize);
     exit(1);
   }
   
-  memset(filesize,0,sizeof(unsigned int)*width*height*nbframes);
+  memset(filesize,0,sizeof(unsigned char)*width*height*nbframes);
 
   read_size = width;
 
