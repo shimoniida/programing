@@ -28,9 +28,7 @@ int main(int argc, char *argv[]){
   
   memset(filesize,0,sizeof(unsigned int)*width*height*nbframes);
 
-
   read_size = width;
-
 
   for(int i=0; i<nbframes;i++){
     for(int j=0;j<height;j++){
