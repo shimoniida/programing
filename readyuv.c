@@ -8,6 +8,7 @@
 
 int main(int argc, char *argv[]){
   FILE *origin;
+  FILE *compare;
   int width = 0;
   int height = 0;
   int read_size = 0;
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]){
   int data = 0;
   unsigned char *filesize = NULL;
 
+
   width = atoi(argv[2]);
   height = atoi(argv[3]);
   nbframes = atoi(argv[4]);
@@ -23,6 +25,10 @@ int main(int argc, char *argv[]){
 
   if(NULL ==(origin=fopen(argv[1],"rb"))){
     fprintf(stderr,"Can not open input file\n");
+    exit(1);
+  }
+  if(NULL ==(compare=fopen(argv[5],"wb"))){
+    fprintf(stderr,"Can not open output file\n");
     exit(1);
   }
 
@@ -44,5 +50,6 @@ int main(int argc, char *argv[]){
     }
     origin += width*height/2;
   }
+  fwrite(filesize,1,read_size*height*nbframes,compare);
   return 0;
 }
