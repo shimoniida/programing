@@ -13,7 +13,8 @@ int main(int argc, char *argv[]){
   int nbframes = 0;
   int size = 0;
   int data = 0;
-  unsigned char *filesize = NULL;
+  long filesize = 0; 
+
 
 
   width = atoi(argv[2]);
@@ -29,15 +30,9 @@ int main(int argc, char *argv[]){
     fprintf(stderr,"Can not open output file\n");
     exit(1);
   }
-
-  filesize = (unsigned char*)malloc((sizeof(unsigned char)*width*height*nbframes));
-  if(filesize==NULL){
-    printf("malloc error\n");
-    free(filesize);
-    exit(1);
-  }
-  
-  memset(filesize,0,sizeof(unsigned char)*width*height*nbframes);
+    fseek(origin,0,2);
+    filesize = ftell(origin);
+    fseek(origin,0,0);
 
   read_size = width;
 
@@ -49,9 +44,6 @@ for(int i=0;i<nbframes;i++){
       fwrite(filesize,1,read_size,compare);
     }
     //printf("file position = %ld\n",ftell(origin));
-    if(i==171||i==172||i==173||i==174){
-        printf("file position = %ld\n",ftell(origin));
-    }
     fseek(origin,(width/2*height/2)*2,SEEK_CUR);
   //origin += (width*height)/2;
 }
