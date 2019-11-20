@@ -46,10 +46,12 @@ int main(int argc, char *argv[]){
   for(int i=0; i<nbframes;i++){
     for(int j=0;j<height;j++){
       fread(filesize,1,read_size,origin);
-      printf("%d\n",*filesize);
+      //printf("%d\n",*filesize);
+      fwrite(filesize,1,read_size,compare);
     }
     origin += width*height/2;
   }
-  fwrite(filesize,1,read_size*height*nbframes,compare);
+  fclose(origin);
+  fclose(compare);
   return 0;
 }
