@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
   memset(filesize,0,sizeof(unsigned char)*width*height*nbframes);
 
   read_size = width;
-
+int offset;
 //only read one frame
 for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
@@ -52,7 +52,8 @@ for(int i=0;i<nbframes;i++){
     if(i==171||i==172||i==173||i==174){
         printf("file position = %ld\n",ftell(origin));
     }
-    fseek(origin,(width/2*height/2)*2,SEEK_CUR);
+    offset = ((width/2*height/2)*2);
+    fseek(origin,offset,SEEK_CUR);
   //origin += (width*height)/2;
 }
 
