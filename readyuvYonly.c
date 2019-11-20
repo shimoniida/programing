@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
   width = atoi(argv[2]);
   height = atoi(argv[3]);
   nbframes = atoi(argv[4]);
-  printf("%d",width);
+  //printf("%d",width);
 
   if(NULL ==(origin=fopen(argv[1],"rb"))){
     fprintf(stderr,"Can not open input file\n");
@@ -40,15 +40,18 @@ int main(int argc, char *argv[]){
   memset(filesize,0,sizeof(unsigned char)*width*height*nbframes);
 
   read_size = width;
+  int total = 0;
+  total = width*height;
 
 //only read one frame
 for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
       fread(filesize,1,read_size,origin);
       //printf("%d\n",*filesize);
-      fwrite(filesize,1,read_size,compare);   
+      fwrite(filesize,1,read_size,compare);
     }
-      fseek(origin,2*(width*height),SEEK_SET);
+    printf("file position = %ld\n",ftell(origin));
+    fseek(origin,(width/2*height/2)*2,SEEK_CUR);
   //origin += (width*height)/2;
 }
 
