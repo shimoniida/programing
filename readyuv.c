@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
-#include "tiffio.h"
-#include"tiff.h"
 
 
 
@@ -43,14 +41,17 @@ int main(int argc, char *argv[]){
 
   read_size = width;
 
-  for(int i=0; i<nbframes;i++){
+//only read one frame
+for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
       fread(filesize,1,read_size,origin);
       //printf("%d\n",*filesize);
-      fwrite(filesize,1,read_size,compare);
+      fwrite(filesize,1,read_size,compare);   
     }
-    origin += width*height/2;
-  }
+      fseek(origin,2*(width*height),SEEK_SET);
+  //origin += (width*height)/2;
+}
+
   fclose(origin);
   fclose(compare);
   return 0;
