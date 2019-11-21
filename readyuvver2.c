@@ -13,8 +13,7 @@ int main(int argc, char *argv[]){
   int nbframes = 0;
   int size = 0;
   int data = 0;
-  long filesize = 0; 
-
+  unsigned char *filesize = NULL;
 
 
   width = atoi(argv[2]);
@@ -30,12 +29,18 @@ int main(int argc, char *argv[]){
     fprintf(stderr,"Can not open output file\n");
     exit(1);
   }
-    fseek(origin,0,2);
-    filesize = ftell(origin);
-    fseek(origin,0,0);
+
+  filesize = (unsigned char*)malloc((sizeof(unsigned char)*width*height*nbframes*3));
+  if(filesize==NULL){
+    printf("malloc error\n");
+    free(filesize);
+    exit(1);
+  }
+  
+  memset(filesize,0,sizeof(unsigned char)*width*height*nbframes*3);
 
   read_size = width;
-
+int offset;
 //only read one frame
 for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
@@ -43,8 +48,21 @@ for(int i=0;i<nbframes;i++){
       //printf("%d\n",*filesize);
       fwrite(filesize,1,read_size,compare);
     }
+    for(int k=0;k<height/2;k++){
+        fread(filesize,1,read_size/2,origin);
+        fwrite(filesize,1,read_size/2,compare);
+    }
+
+for(int l=0;l<height/2;l++){
+        fread(filesize,1,read_size/2,origin);
+        fwrite(filesize,1,read_size/2,compare);
+    }
     //printf("file position = %ld\n",ftell(origin));
-    fseek(origin,(width/2*height/2)*2,SEEK_CUR);
+    /*if(i==171||i==172||i==173||i==174){
+        printf("file position = %ld\n",ftell(origin));
+    }*/
+    //offset = ((width/2*height/2)*2);
+    //fseek(origin,offset,SEEK_CUR);
   //origin += (width*height)/2;
 }
 
