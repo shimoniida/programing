@@ -14,12 +14,15 @@ int main(int argc, char *argv[]){
   int size = 0;
   int data = 0;
   unsigned char *filesize = NULL;
+  unsigned char *Y,*U,*V;
 
 
   width = atoi(argv[2]);
   height = atoi(argv[3]);
   nbframes = atoi(argv[4]);
   //printf("%d",width);
+
+  
 
   if(NULL ==(origin=fopen(argv[1],"rb"))){
     fprintf(stderr,"Can not open input file\n");
@@ -36,6 +39,10 @@ int main(int argc, char *argv[]){
     free(filesize);
     exit(1);
   }
+  Y = (unsigned char*)malloc(sizeof(unsigned char)*width*height*nbframes);
+  U = (unsigned char*)malloc(sizeof(unsigned char)*width/2*height/2*nbframes);
+  V = (unsigned char*)malloc(sizeof(unsigned char)*width/2*height/2*nbframes);
+
   
   memset(filesize,0,sizeof(unsigned char)*width*height*nbframes*3);
 
@@ -46,16 +53,23 @@ for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
       fread(filesize,1,read_size,origin);
       //printf("%d\n",*filesize);
+      Y = filesize;
       fwrite(filesize,1,read_size,compare);
+      //printf("filesize =%ld\n",*filesize);
+      printf("%d\n",*Y);
     }
     for(int k=0;k<height/2;k++){
         fread(filesize,1,read_size/2,origin);
         fwrite(filesize,1,read_size/2,compare);
+        U = filesize;
+        //printf("filesize =%ld\n",*filesize);
     }
 
 for(int l=0;l<height/2;l++){
         fread(filesize,1,read_size/2,origin);
         fwrite(filesize,1,read_size/2,compare);
+        V = filesize;
+        //printf("filesize =%ld\n",*filesize);
     }
     //printf("file position = %ld\n",ftell(origin));
     /*if(i==171||i==172||i==173||i==174){
@@ -65,8 +79,20 @@ for(int l=0;l<height/2;l++){
     //fseek(origin,offset,SEEK_CUR);
   //origin += (width*height)/2;
 }
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   fclose(origin);
   fclose(compare);
+
+
   return 0;
 }
