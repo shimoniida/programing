@@ -61,13 +61,14 @@ for(int i=0;i<nbframes;i++){
       //fwrite(Y,1,read_size,compare);
       //printf("%d\n",*Y);
       memcpy(Y,filesize,read_size);
-      //printf("%d\n",*Y);
+      printf("%d\n",*Y);
       fwrite(Y,1,read_size,compare);
     }
     for(int k=0;k<height/2;k++){
         fread(filesize,1,read_size/2,origin);
         //fwrite(filesize,1,read_size/2,compare);
-        U = filesize;
+        memcpy(U,filesize,read_size/2);
+        //printf("%d\n",*U);
         //printf("filesize =%ld\n",*filesize);
     }
 
@@ -75,6 +76,8 @@ for(int l=0;l<height/2;l++){
         fread(filesize,1,read_size/2,origin);
         //fwrite(filesize,1,read_size/2,compare);
         V = filesize;
+        memcpy(V,filesize,read_size/2);
+        //printf("%d\n",*V);
         //printf("filesize =%ld\n",*filesize);
     }
     //printf("file position = %ld\n",ftell(origin));
@@ -90,6 +93,9 @@ for(int l=0;l<height/2;l++){
             filesize += offset;
             printf("%d\n",Y);
             //fwrite(Y,1,read_size,compare);*/
+
+
+
 
 }
   

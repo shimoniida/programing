@@ -7,14 +7,16 @@
 int main(int argc, char *argv[]){
   FILE *origin;
   FILE *compare;
-  int width = 0;
-  int height = 0;
-  int read_size = 0;
-  int nbframes = 0;
-  int size = 0;
-  int data = 0;
+  unsigned int width = 0;
+  unsigned  int height = 0;
+  unsigned int read_size = 0;
+  unsigned int nbframes = 0;
+  unsigned int size = 0;
+  unsigned int data = 0;
   unsigned char *filesize = NULL;
-  unsigned char *Y,*U,*V;
+  unsigned char *Y = NULL;
+  unsigned char *U = NULL;
+  unsigned char *V = NULL;
 
 
   width = atoi(argv[2]);
@@ -53,21 +55,22 @@ for(int i=0;i<nbframes;i++){
     for(int j=0;j<height;j++){
       fread(filesize,1,read_size,origin);
       //printf("%d\n",*filesize);
-      Y = filesize;
-      fwrite(filesize,1,read_size,compare);
+      //printf("Y pointer =%p\nfilesize pointer = %p",&Y,&filesize);
+      //fwrite(filesize,1,read_size,compare);
       //printf("filesize =%ld\n",*filesize);
-      printf("%d\n",*Y);
+      //fwrite(Y,1,read_size,compare);
+      //printf("%d\n",*Y);
     }
     for(int k=0;k<height/2;k++){
         fread(filesize,1,read_size/2,origin);
-        fwrite(filesize,1,read_size/2,compare);
+        //fwrite(filesize,1,read_size/2,compare);
         U = filesize;
         //printf("filesize =%ld\n",*filesize);
     }
 
 for(int l=0;l<height/2;l++){
         fread(filesize,1,read_size/2,origin);
-        fwrite(filesize,1,read_size/2,compare);
+        //fwrite(filesize,1,read_size/2,compare);
         V = filesize;
         //printf("filesize =%ld\n",*filesize);
     }
@@ -78,8 +81,16 @@ for(int l=0;l<height/2;l++){
     //offset = ((width/2*height/2)*2);
     //fseek(origin,offset,SEEK_CUR);
   //origin += (width*height)/2;
+    for(int x=0; x<width; x++){
+      for(int y=0; y<height; y++){
+          Y = filesize;
+          printf("Y=%u\n",*Y);
+          filesize += width/2*height/2*2;
+          
+      }
+  }
 }
-  
+
   
   
   
